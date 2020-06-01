@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.ArrayList;
 
 public class PongEnvironment
 {
@@ -6,16 +7,28 @@ public class PongEnvironment
 	public static final int HEIGHT = 600;
 
 	private Ball ball;
-	private Paddle left, right;
+	private Paddle left, right;//, left2, right2;
 	private int leftScore = 0, rightScore = 0;
 	private boolean leftComputer, rightComputer;
 
 	public PongEnvironment()
 	{
-		ball = new Ball(Color.RED, WIDTH/2, HEIGHT/2);
+		ball = new Ball(Color.BLACK, WIDTH/2, HEIGHT/2);
 		left = new Paddle(10, HEIGHT/2);
 		right = new Paddle(WIDTH-10, HEIGHT/2);
 	}
+        
+        /*public PongEnvironment(Paddle left2, Paddle right2){
+                ball = new Ball(Color.RED, WIDTH/2, HEIGHT/2);
+		left = new Paddle(10, HEIGHT/4);
+		left.HEIGHT = 30;
+                right = new Paddle(WIDTH-10, HEIGHT/4);
+                right.HEIGHT = 30;
+                this.left2 = left2;
+                left2.HEIGHT = 30;
+                this.right2 = right2;
+                right2.HEIGHT = 30;
+        }*/
 
 	public void setComputer(boolean l, boolean r)
 	{
@@ -32,6 +45,12 @@ public class PongEnvironment
 	{
 		return right;
 	}
+        
+        public void score(Color color){
+            ball = new Ball(color, WIDTH/2, HEIGHT/2);
+            left = new Paddle(10, HEIGHT/2);
+            right = new Paddle(WIDTH-10, HEIGHT/2);
+        }
 
 	private void leftScore()
 	{
@@ -44,10 +63,7 @@ public class PongEnvironment
 		catch(Exception ex)
 		{
 		}
-
-		ball = new Ball(Color.RED, WIDTH/2, HEIGHT/2);
-		left = new Paddle(10, HEIGHT/2);
-		right = new Paddle(WIDTH-10, HEIGHT/2);
+                this.score(Color.RED);
 	}
 
 	private void rightScore()
@@ -61,16 +77,13 @@ public class PongEnvironment
 		catch(Exception ex)
 		{
 		}
-
-		ball = new Ball(Color.BLUE, WIDTH/2, HEIGHT/2);
-		left = new Paddle(10, HEIGHT/2);
-		right = new Paddle(WIDTH-10, HEIGHT/2);
-	}
+                this.score(Color.BLUE);
+        }
 
 	public void update()
 	{
 		ball.move();
-		if(ball.getLocation().getY() - Ball.RADIUS <= 0)
+                    if(ball.getLocation().getY() - Ball.RADIUS <= 0)
 			ball.bounceTop();
 		else if(ball.getLocation().getY() + Ball.RADIUS >= HEIGHT)
 			ball.bounceTop();
@@ -82,7 +95,7 @@ public class PongEnvironment
 			rightScore();
 		else if(ball.getLocation().getX() > WIDTH)
 			leftScore();
-
+//Aquí se define el funcionamiento de la máquina en el juego.
 		if(leftComputer)
 			left.moveTo((int)ball.getLocation().getY());
 		if(rightComputer)
@@ -95,6 +108,8 @@ public class PongEnvironment
 		ball.draw(g);
 		left.draw(g);
 		right.draw(g);
+                /*left2.draw(g);
+                right2.draw(g);*/
 
 		g.drawString("Score: "+ leftScore, 25, 12);
 		g.drawString("Score: "+ rightScore, WIDTH-125, 12);

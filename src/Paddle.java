@@ -2,9 +2,9 @@ import java.awt.*;
 
 public class Paddle
 {
-	public static final int WIDTH = 123;
-	public static final int HEIGHT = 123;
-	public static final int MAX_SPEED = 10;
+	public int WIDTH = 15;
+	public int HEIGHT = 80;
+	public static final int MAX_SPEED = 30;
 
 	private int x, y;
 
@@ -31,9 +31,9 @@ public class Paddle
 	{
 		this.y+=dy;
 		if(y < 0)
-			y = 0;
+			y = 0+40;
 		if(y > PongEnvironment.HEIGHT)
-			y = PongEnvironment.HEIGHT;
+			y = PongEnvironment.HEIGHT-40;
 	}
 
 	public void moveUp()
@@ -56,7 +56,7 @@ public class Paddle
 
 	public void draw(Graphics g)
 	{
-		g.setColor(Color.RED);
-		g.fillRect(x-WIDTH/2, y-HEIGHT/2, WIDTH, HEIGHT);
+		g.setColor(Color.BLACK);
+		g.fillRect(x-WIDTH/2, y-HEIGHT, WIDTH, HEIGHT*2);
 	}
 }
